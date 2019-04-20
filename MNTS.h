@@ -30,13 +30,14 @@ private:
     {
         std::vector<std::vector<int>> field = f.get_field();
         std::vector<std::vector<int>> prev_field = this->previous_step.get_field();
-        for (int i = 0; i < TTT_FIELDSIZE; i++)
-            for (int j = 0; j < TTT_FIELDSIZE; j++)
+        int s = f.get_size();
+        for (int i = 0; i < s; i++)
+            for (int j = 0; j < s; j++)
                 if ( field[i][j] != prev_field[i][j] ){
                     x = j;
                     y = i;
                 }
-        this->previous_step = Field(field);
+        this->previous_step = Field(field, s);
     }
 
     Tree * tree;
@@ -48,11 +49,11 @@ private:
     void backpropagation(Field& field, Tree * newnode);
 
 public:
-    MNTS (int fig): Player(fig)
+    MNTS (int fig, int s): Player(fig), previous_step(Field(s))
     {
         this->tree = new Tree;
         this->current = this->tree;
-        this->previous_step = Field();
+        // this->previous_step = Field(s);
     }
 
     void search(Field& field){
@@ -68,6 +69,6 @@ public:
 
     void Reset (){
         this->current = this->tree;
-        this->previous_step = Field();
+        this->previous_step = Field(this->previous_step.get_size());
     }
 };

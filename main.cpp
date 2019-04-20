@@ -8,14 +8,17 @@ using namespace std;
 
 int main ()
 {
-    std::vector<std::vector<int>> v(TTT_FIELDSIZE, std::vector<int>(TTT_FIELDSIZE, 0));
+    int size;
+    std::cout << "Enter the field size";
+    std::cin >> size;
+    std::vector<std::vector<int>> v(size, std::vector<int>(size, 0));
     for (const auto& lines: v){
         for (const auto& elem: lines){
             std::cout << elem << " ";
         }
         std::cout << "\n";
     }
-    Field field(v);
+    Field field(v, size);
     std::cout<<field;
     // f.make_move(1, 1, 1);
     // std::cout<<f;
@@ -55,7 +58,7 @@ int main ()
 
     // system ( "cls" );
     User player1 = User(TTT_CROSS);
-    MNTS player2 = MNTS(TTT_CIRCLE);
+    MNTS player2 = MNTS(TTT_CIRCLE, size);
     int current = 1;
     while (field.is_playable())
     {
